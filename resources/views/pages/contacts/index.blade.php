@@ -176,6 +176,7 @@
     </div>
 
 
+    @include('components.session')
 
 
 </x-app-layout>

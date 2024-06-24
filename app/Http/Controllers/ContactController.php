@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -97,15 +98,21 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
 
-     public function search(Request $request)
+    
+    public function search(Request $request)
     {
         $query = $request->input('query');
         $contacts = Contact::with('island')
                         ->where('name', 'like', "%$query%")
                         ->orWhere('email', 'like', "%$query%")
-                        ->get();
+                        ->paginate(5); // Paginate the results, 10 items per page
+
         return view('contacts.index', compact('contacts'));
     }
+
+
+ 
+
 
 
     

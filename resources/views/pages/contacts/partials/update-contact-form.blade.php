@@ -13,8 +13,6 @@
             </div>
         @endif
 
-
-
         <form action="{{ route('contacts.update', ['contact' => $contact]) }}" method="POST" class="update-contact-form">
             @csrf
             @method('PUT')
@@ -49,7 +47,5 @@
             </div>
         </form>
     </x-bladewind::modal>
-    <x-bladewind::modal type="success" title="Contact Updated" name="success" cancel_button_label="">
-        {{ session('success') }}
-    </x-bladewind::modal>
+
 </div>
