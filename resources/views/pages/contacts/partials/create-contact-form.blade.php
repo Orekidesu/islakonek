@@ -46,4 +46,8 @@
         </form>
 
     </x-bladewind::modal>
+
+    <x-bladewind::modal type="success" title="Contact Created" name="success" cancel_button_label="">
+        {{ session('success') }}
+    </x-bladewind::modal>
 </div>

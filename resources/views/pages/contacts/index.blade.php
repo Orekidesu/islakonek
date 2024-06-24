@@ -11,19 +11,7 @@
             <div class="flex justify-end pb-2">
 
 
-                <x-bladewind::button onclick="showModal('create-modal')">
-                    <div class="items-center flex">
-                        <span class="material-symbols-outlined">
-                            add
-                        </span>
 
-                        <span class="ml-2">
-                            Add Contact
-                        </span>
-
-                    </div>
-
-                </x-bladewind::button>
 
                 @include('pages.contacts.partials.create-contact-form')
 
@@ -33,15 +21,31 @@
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-md  md:rounded-lg">
                         <div
-                            class="bg-gray-800 border border-b-gray-700 border-t-0 border-l-0 border-r-0 divide-gray-200 flex justify-end p-2 ">
+                            class="bg-gray-800 border border-b-gray-700 border-t-0 border-l-0 border-r-0 divide-gray-200 flex justify-between p-2 ">
 
-                            {{-- input search --}}
-                            <div>
-                                <input type="search" name="" id="" placeholder="search here"
-                                    class="rounded-md">
+                            <div class="p-0">
+                                <x-bladewind::button onclick="showModal('create-modal')">
+                                    <div class="items-center flex">
+                                        <span class="material-symbols-outlined">
+                                            add
+                                        </span>
 
+                                        <span class="ml-2">
+                                            Add Contact
+                                        </span>
+
+                                    </div>
+
+                                </x-bladewind::button>
                             </div>
-                            {{-- filter --}}
+                            <div>
+                                {{-- input search --}}
+
+                                @include('pages.contacts.partials.search-contacts')
+                                {{-- filter --}}
+                            </div>
+
+
 
 
                         </div>
@@ -128,20 +132,7 @@
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
-                                                    {{-- 
-                                                    <a href="{{ route('contacts.edit', ['contact' => $contact]) }}"
-                                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                                        <span class="material-symbols-outlined">
-                                                            edit_square
-                                                        </span>
-                                                    </a> --}}
-                                                    {{-- <div class="h-12 w-20 flex items-center">
-                                                        <x-bladewind::button onclick="showModal('large-modal')">
-                                                            <span class="material-symbols-outlined">
-                                                                edit_square
-                                                            </span>
-                                                        </x-bladewind::button>
-                                                    </div> --}}
+
                                                     <x-bladewind::button onclick="showEditModal({{ $contact->id }})">
                                                         <div class="items-center flex">
                                                             <span class="material-symbols-outlined">edit_square</span>
@@ -150,20 +141,14 @@
                                                     @include('pages.contacts.partials.update-contact-form')
 
 
+                                                    <x-bladewind::button color="red"
+                                                        onclick="showConfirmDeleteModal({{ $contact->id }})">
+                                                        <div class="items-center flex">
+                                                            <span class="material-symbols-outlined">delete</span>
+                                                        </div>
+                                                    </x-bladewind::button>
+                                                    @include('pages.contacts.partials.delete-contact')
 
-
-
-                                                    <form
-                                                        action="{{ route('contacts.destroy', ['contact' => $contact]) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"><span
-                                                                class="material-symbols-outlined">
-                                                                delete
-                                                            </span></button>
-                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -189,4 +174,8 @@
 
         </div>
     </div>
+
+
+
+
 </x-app-layout>

@@ -28,11 +28,13 @@
         <!-- Page Heading -->
         @isset($header)
             <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
         @endisset
+
+
 
         <!-- Page Content -->
         <main>
@@ -72,5 +74,20 @@
                 document.getElementById('edit-island_id').value = data.contact.island_id;
                 showModal('edit-contact-modal');
             });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success'))
+            showModal('success');
+        @endif
+    });
+
+    function showConfirmDeleteModal(contactId) {
+        document.getElementById('delete-form').action = `/contacts/${contactId}`;
+        showModal('confirm-delete');
+    }
+
+    function submitDeleteForm() {
+        document.getElementById('delete-form').submit();
     }
 </script>
