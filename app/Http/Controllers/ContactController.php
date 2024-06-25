@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
-use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -38,25 +38,25 @@ class ContactController extends Controller
     // }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:contacts',
-        'phone' => 'required',
-        'island_id' => 'required|exists:islands,id',
-        'notes' => 'nullable',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:contacts',
+            'phone' => 'required',
+            'island_id' => 'required|exists:islands,id',
+            'notes' => 'nullable',
+        ]);
 
-    Contact::create([
-        'name' => $request->input('name'),
-        'email' => $request->input('email'),
-        'phone' => $request->input('phone'),
-        'island_id' => $request->input('island_id'),
-        'notes' => $request->input('notes', null),
-    ]);
+        Contact::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'island_id' => $request->input('island_id'),
+            'notes' => $request->input('notes', null),
+        ]);
 
-    return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
-}
+        return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
+    }
 
     public function show(Contact $contact)
     {
@@ -98,22 +98,15 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
 
-    
+
     public function search(Request $request)
     {
         $query = $request->input('query');
         $contacts = Contact::with('island')
-                        ->where('name', 'like', "%$query%")
-                        ->orWhere('email', 'like', "%$query%")
-                        ->paginate(5); // Paginate the results, 10 items per page
+            ->where('name', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%")
+            ->paginate(5); // Paginate the results, 10 items per page
 
         return view('contacts.index', compact('contacts'));
     }
-
-
- 
-
-
-
-    
 }
