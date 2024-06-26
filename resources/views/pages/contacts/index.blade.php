@@ -5,10 +5,16 @@
         </h2>
     </x-slot>
 
+    @if (session()->has('success'))
+        <div class="alert alert-success">
+        </div>
+    @endif
+
     {{-- <livewire:contact.contact-table> --}}
     @livewire('contact.contact-table')
-
     @include('components.session')
+
+
 
 
 </x-app-layout>

@@ -143,12 +143,10 @@
 
         {{-- Pagination --}}
 
-        <div class="flex items-center justify-center mt-6">
+        <div class="flex  flex-start mt-4 mx-2">
 
 
-            <div class="flex items-center justify-center gap-x-3">
-                {{ $contacts->links() }}
-            </div>
+            {{ $contacts->links('livewire.custom-pagination') }}
 
 
         </div>

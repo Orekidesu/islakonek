@@ -13,6 +13,11 @@ class ContactTable extends Component
     use WithPagination;
 
     public $islands;
+    public $contactId;
+    public $name;
+    public $email;
+    public $phone;
+    public $island_id;
 
     public function mount()
     {
@@ -26,22 +31,33 @@ class ContactTable extends Component
         return view('livewire.contact.contact-table', compact('contacts'));
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $request->validate([
+        $validatedData = $this->validate([
             'name' => 'required',
             'email' => 'required|email|unique:contacts',
             'phone' => 'required',
             'island_id' => 'required|exists:islands,id',
         ]);
 
-        Contact::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'island_id' => $request->input('island_id'),
+        Contact::create($validatedData);
+        session()->flash('success', 'Contact created successfully.');
+
+
+        return $this->redirect(route('contacts.index'));
+    }
+
+    public function update(Request $request, Contact $contact)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:contacts,email,' . $contact->id,
+            'phone' => 'required',
+            'island_id' => 'required',
         ]);
 
-        // No need to update $contacts here since it's loaded in render()
+        $contact->update($request->all());
+        // return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
+        return redirect()->route('contacts.index')->with('success', 'Contact updated successfully');
     }
 }
