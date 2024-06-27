@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
-use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -74,11 +73,18 @@ class ContactController extends Controller
     public function edit(Contact $contact)
     {
         $islands = Island::all();
-        return response()->json([
-            'contact' => $contact,
-            'islands' => $islands
-        ]);
+        // Pass both contact and islands to the view
+        return view('pages.contacts.partials.update-contact-form', compact('contact', 'islands'));
     }
+
+    // public function edit(Contact $contact)
+    // {
+    //     $islands = Island::all();
+    //     return response()->json([
+    //         'contact' => $contact,
+    //         'islands' => $islands
+    //     ]);
+    // }
 
     public function update(Request $request, Contact $contact)
     {
