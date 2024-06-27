@@ -47,14 +47,15 @@
 </html>
 <script>
     // the script called by the Update button
-    createProfile = () => {
+    function createProfile() {
         if (validateForm('.create-contact-form')) {
             domEl('.create-contact-form').submit();
         } else {
             return false;
         }
     }
-    updateProfile = () => {
+
+    function updateProfile() {
         if (validateForm('.update-contact-form')) {
             domEl('.update-contact-form').submit();
         } else {

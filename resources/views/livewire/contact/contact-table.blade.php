@@ -3,10 +3,6 @@
 
     <div class="flex flex-col mt-6">
         <div class="flex justify-end pb-2">
-
-
-
-
             @include('pages.contacts.partials.create-contact-form')
         </div>
         <div class="mx-0 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
