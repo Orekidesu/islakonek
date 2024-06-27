@@ -9,10 +9,14 @@ class Island extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'location'];
-     public function people()
+    protected $fillable = ['name', 'description', 'image', 'region_id', 'population', 'area_sq_km'];
+    public function people()
     {
         return $this->hasMany(Contact::class);
     }
-    
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 }

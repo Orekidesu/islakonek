@@ -27,7 +27,6 @@
                                     </span>
 
                                 </div>
-
                             </x-bladewind::button>
                         </div>
                         <div>

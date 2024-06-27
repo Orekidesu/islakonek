@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Island;
 use Illuminate\Http\Request;
+use App\Models\Region;
 
 class IslandController extends Controller
 {
@@ -13,7 +14,9 @@ class IslandController extends Controller
     public function index()
     {
         $islands = Island::all();
-        return view('pages.islands.index', compact('islands'));
+        $regions = Region::all();
+
+        return view('pages.islands.index', compact('regions'));
     }
 
     /**
@@ -21,7 +24,6 @@ class IslandController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -29,7 +31,6 @@ class IslandController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('status')->default('active');
+            $table->string('photo')->nullable();
             $table->foreignId('island_id')->constrained('islands')->onDelete('cascade');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

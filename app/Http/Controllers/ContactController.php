@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
-use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -13,7 +12,6 @@ class ContactController extends Controller
 
     public function index()
     {
-        // $contacts = Contact::with('island')->get();
 
 
         return view('pages.contacts.index');
@@ -45,18 +43,12 @@ class ContactController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:contacts',
             'phone' => 'required',
+            'status' => 'nullable', // Add this line to validate the 'status' field
+            'photo' => 'nullable', // Add this line to validate the 'photo' field
             'island_id' => 'required|exists:islands,id',
-            'notes' => 'nullable',
         ]);
 
-        Contact::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'island_id' => $request->input('island_id'),
-            'notes' => $request->input('notes', null),
-        ]);
-
+        Contact::create($request->all());
         return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
     }
 
@@ -86,6 +78,8 @@ class ContactController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:contacts,email,' . $contact->id,
             'phone' => 'required',
+            'status' => 'nullable', // Add this line to validate the 'status' field
+            'photo' => 'nullable', // Add this line to validate the 'photo' field
             'island_id' => 'required',
         ]);
 

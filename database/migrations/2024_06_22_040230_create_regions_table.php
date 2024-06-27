@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('islands', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('region_no')->unique()->nullable();
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
-            $table->integer('population')->unsigned()->nullable();
-            $table->decimal('area_sq_km',)->nullable();
-            $table->foreignId('region_id')->constrained('regions')->onDelete('cascade');
-            $table->softDeletes(); // Location string address
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('islands');
+        Schema::dropIfExists('regions');
     }
 };

@@ -10,8 +10,8 @@ class Contact extends Model
     use HasFactory;
 
 
-    protected $fillable = ['name','phone', 'email','island_id'];
-     public function island()
+    protected $fillable = ['name', 'email', 'phone', 'status', 'photo', 'island_id'];
+    public function island()
     {
         return $this->belongsTo(Island::class);
     }
