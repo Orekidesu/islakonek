@@ -8,13 +8,14 @@ use App\Models\Island;
 
 class ContactController extends Controller
 {
+
+
     public function index()
     {
         // $contacts = Contact::with('island')->get();
-        $contacts = Contact::with('island')->simplePaginate(5);
-        $islands = Island::all();
 
-        return view('pages.contacts.index', compact('contacts', 'islands'));
+
+        return view('pages.contacts.index');
     }
 
     public function create()

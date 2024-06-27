@@ -3,21 +3,20 @@
 namespace App\Livewire\Contact;
 
 use Livewire\Component;
+
+// use pagination
+use Livewire\WithPagination;
 use App\Models\Contact;
 use App\Models\Island;
-use Illuminate\Http\Request;
-use Livewire\WithPagination;
+
 
 class ContactTable extends Component
 {
     use WithPagination;
 
+
     public $islands;
-    public $contactId;
-    public $name;
-    public $email;
-    public $phone;
-    public $island_id;
+    public $searchContact = '';
 
     public function mount()
     {
@@ -26,38 +25,22 @@ class ContactTable extends Component
 
     public function render()
     {
-        // Load contacts here and pass them to the view
-        $contacts = Contact::paginate(5);
+        $contacts = Contact::join('islands', 'contacts.island_id', '=', 'islands.id')
+            ->where('contacts.name', 'like', '%' . $this->searchContact . '%')
+            ->orWhere('contacts.email', 'like', '%' . $this->searchContact . '%')
+            ->orWhere('contacts.phone', 'like', '%' . $this->searchContact . '%')
+            ->orWhere('islands.name', 'like', '%' . $this->searchContact . '%')
+            ->select('contacts.*') // Select only the contacts columns to avoid column name conflicts
+            ->distinct() // Ensure each contact is only returned once
+            ->paginate(5);
+
         return view('livewire.contact.contact-table', compact('contacts'));
     }
 
-    public function store()
+    public function updating($key): void
     {
-        $validatedData = $this->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:contacts',
-            'phone' => 'required',
-            'island_id' => 'required|exists:islands,id',
-        ]);
-
-        Contact::create($validatedData);
-        session()->flash('success', 'Contact created successfully.');
-
-
-        return $this->redirect(route('contacts.index'));
-    }
-
-    public function update(Request $request, Contact $contact)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:contacts,email,' . $contact->id,
-            'phone' => 'required',
-            'island_id' => 'required',
-        ]);
-
-        $contact->update($request->all());
-        // return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
-        return redirect()->route('contacts.index')->with('success', 'Contact updated successfully');
+        if ($key === 'searchContact') {
+            $this->resetPage();
+        }
     }
 }
