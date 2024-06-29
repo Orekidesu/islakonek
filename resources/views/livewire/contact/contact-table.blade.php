@@ -3,6 +3,10 @@
 
     <div class="flex flex-col mt-6">
         <div class="flex justify-end pb-2">
+
+
+
+
             @include('pages.contacts.partials.create-contact-form')
         </div>
         <div class="mx-0 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -82,7 +86,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($contacts as $contact)
-                                    <tr class="hover:bg-gray-600">
+                                    <tr class="hover:bg-gray-600 transition duration-300">
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
 

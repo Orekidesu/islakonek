@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidateContactCreateRequest;
+use App\Http\Requests\ValidateContactUpdateRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
@@ -37,18 +39,10 @@ class ContactController extends Controller
     //     return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
     // }
 
-    public function store(Request $request)
+    public function store(ValidateContactCreateRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:contacts',
-            'phone' => 'required',
-            'status' => 'nullable', // Add this line to validate the 'status' field
-            'photo' => 'nullable', // Add this line to validate the 'photo' field
-            'island_id' => 'required|exists:islands,id',
-        ]);
 
-        Contact::create($request->all());
+        Contact::create($request->validated());
         return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
     }
 
@@ -66,32 +60,16 @@ class ContactController extends Controller
     public function edit(Contact $contact)
     {
         $islands = Island::all();
-        // Pass both contact and islands to the view
-        return view('pages.contacts.partials.update-contact-form', compact('contact', 'islands'));
+        return response()->json([
+            'contact' => $contact,
+            'islands' => $islands
+        ]);
     }
 
-    // public function edit(Contact $contact)
-    // {
-    //     $islands = Island::all();
-    //     return response()->json([
-    //         'contact' => $contact,
-    //         'islands' => $islands
-    //     ]);
-    // }
-
-    public function update(Request $request, Contact $contact)
+    public function update(ValidateContactUpdateRequest $request, Contact $contact)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:contacts,email,' . $contact->id,
-            'phone' => 'required',
-            'status' => 'nullable', // Add this line to validate the 'status' field
-            'photo' => 'nullable', // Add this line to validate the 'photo' field
-            'island_id' => 'required',
-        ]);
 
-        $contact->update($request->all());
-        // return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
+        $contact->update($request->validated());
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully');
     }
 

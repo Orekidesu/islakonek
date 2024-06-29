@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Contact;
 use App\Models\Island;
-
+use App\Models\Region;
 
 class ContactTable extends Component
 {
@@ -17,9 +17,12 @@ class ContactTable extends Component
 
     public $islands;
     public $searchContact = '';
+    public $regions;
 
     public function mount()
     {
+
+        $this->regions = Region::all();
         $this->islands = Island::all();
     }
 

@@ -14,9 +14,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
     Route::resource('contacts', ContactController::class);
-
     Route::resource('islands', IslandController::class);
 });
 
