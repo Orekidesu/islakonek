@@ -1,9 +1,8 @@
 <div>
     {{-- Nothing in the world is as soft and yielding as water. --}}
 
-    <div class="flex flex-col mt-6">
+    <div class="flex flex-col mt-6 mx-5">
         <div class="flex justify-end pb-2">
-
 
 
 
@@ -11,9 +10,10 @@
         </div>
         <div class="mx-0 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-md  md:rounded-lg">
+                <div
+                    class="overflow-hidden border border-gray-200 border-t-0 dark:border-gray-700 rounded-md  md:rounded-lg">
                     <div
-                        class="bg-gray-800 border border-b-gray-700 border-t-0 border-l-0 border-r-0 divide-gray-200 flex justify-between p-2 ">
+                        class="dark:bg-gray-800 border border-b-gray-700 border-t-0 border-l-0 border-r-0 divide-gray-200 flex justify-between p-2 ">
 
                         <div class="p-0">
                             <x-bladewind::button onclick="showModal('create-modal')">
@@ -28,6 +28,8 @@
 
                                 </div>
                             </x-bladewind::button>
+
+
                         </div>
                         <div>
                             {{-- input search --}}
@@ -86,14 +88,14 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($contacts as $contact)
-                                    <tr class="hover:bg-gray-600 transition duration-300">
-                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    <tr class="hover:bg-gray-200  transition duration-300">
+                                        <td class="px-4 py-4 text-sm font-medium whitespace-nowrap ">
                                             <div class="inline-flex items-center gap-x-3">
 
                                                 <div class="flex items-center gap-x-2">
 
                                                     <div>
-                                                        <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                        <h2 class="font-medium ">
                                                             <a
                                                                 href="{{ route('contacts.show', ['contact' => $contact]) }}">
                                                                 {{ $contact->name }}
@@ -106,17 +108,17 @@
                                         </td>
                                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div
-                                                class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                <h2 class="text-sm font-normal text-emerald-500">
+                                                class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 dark:bg-gray-800">
+                                                <h2 class="text-sm font-normal">
                                                     {{ $contact->phone }}
                                                 </h2>
                                             </div>
                                         </td>
                                         <td
-                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            class="px-4 py-4 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">
                                             {{ $contact->email }}</td>
                                         <td
-                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            class="px-4 py-4 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">
                                             {{ $contact->island->name }}</td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
 
@@ -155,7 +157,7 @@
 
     {{-- Pagination --}}
 
-    <div class="pt-3">
+    <div class="pt-3 mx-5">
         {{ $contacts->links('livewire.contact.custom-pagination') }}
     </div>
 </div>

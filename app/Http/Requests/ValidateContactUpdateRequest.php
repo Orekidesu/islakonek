@@ -21,10 +21,12 @@ class ValidateContactUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $contactId = $this->route('contact')->id;
         return [
 
             'name' => 'required',
-            'email' => 'required|email|unique:contacts' . $this->contact->id,
+            // 'email' => 'required|email|unique:contacts,email,' . $this->contact->id,
+            'email' => 'required|email|unique:contacts,email,' . $contactId,
             'phone' => 'required',
             'status' => 'nullable',
             'photo' => 'nullable',

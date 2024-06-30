@@ -16,8 +16,9 @@
             <p>Are you sure you want to delete this contact?</p>
             <div class="flex items-center justify-between pt-8">
                 <x-bladewind::button onclick="hideModal('confirm-delete')">Cancel</x-bladewind::button>
-                <x-bladewind::button type="button" color="red"
-                    onclick="submitDeleteForm()">Delete</x-bladewind::button>
+                <x-bladewind::button type="button" color="red" onclick="submitDeleteForm()">
+                    <p class="text-white">Delete</p>
+                </x-bladewind::button>
 
             </div>
         </form>
