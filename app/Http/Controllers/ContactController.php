@@ -7,6 +7,7 @@ use App\Http\Requests\ValidateContactUpdateRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\Island;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -14,7 +15,6 @@ class ContactController extends Controller
 
     public function index()
     {
-
 
         return view('pages.contacts.index');
     }
@@ -25,19 +25,6 @@ class ContactController extends Controller
         return view('pages.contacts.partials.create-contact-form', compact('islands'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:contacts',
-    //         'phone' => 'required',
-    //         'island_id' => 'required|exists:islands,id',
-
-    //     ]);
-
-    //     Contact::create($request->all());
-    //     return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
-    // }
 
     public function store(ValidateContactCreateRequest $request)
     {
@@ -51,11 +38,6 @@ class ContactController extends Controller
         return view('pages.contacts.partials.show-contact', compact('contact'));
     }
 
-    // public function edit(Contact $contact)
-    // {
-    //     $islands = Island::all();
-    //     return view('pages.contacts.partials.update-contact-form', compact('contact'));
-    // }
 
     public function edit(Contact $contact)
     {
@@ -68,8 +50,8 @@ class ContactController extends Controller
 
     public function update(ValidateContactUpdateRequest $request, Contact $contact)
     {
-        // dd('asdasads');
 
+        // Log::debug('Contact ID in controller:', ['contact_id' => $contact->id]);
         $contact->update($request->validated());
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully');
     }
@@ -78,17 +60,5 @@ class ContactController extends Controller
     {
         $contact->delete();
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
-    }
-
-
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $contacts = Contact::with('island')
-            ->where('name', 'like', "%$query%")
-            ->orWhere('email', 'like', "%$query%")
-            ->paginate(5); // Paginate the results, 10 items per page
-
-        return view('contacts.index', compact('contacts'));
     }
 }

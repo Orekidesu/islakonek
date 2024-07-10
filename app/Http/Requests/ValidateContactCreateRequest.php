@@ -25,7 +25,7 @@ class ValidateContactCreateRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:contacts',
             'phone' => 'required',
-            'status' => 'nullable',
+            'status' => 'required',
             'photo' => 'nullable',
             'island_id' => 'required|exists:islands,id',
         ];

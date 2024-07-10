@@ -64,16 +64,40 @@
         }
     }
 
+    createIsland = () => {
+        if (validateForm('.create-island-form')) {
+            domEl('.create-island-form').submit();
+        } else {
+            return false;
+        }
+    }
+
+    // updateProfile = () => {
+    //     if (validateForm('.update-island-form')) {
+    //         domEl('.update-island-form').submit();
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
 
     function showEditModal(contactId) {
+        // print the contact id to the console
+        console.log(contactId);
+
         fetch(`/contacts/${contactId}/edit`)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 document.getElementById('contact_id').value = data.contact.id;
                 document.getElementById('edit-name').value = data.contact.name;
                 document.getElementById('edit-phone').value = data.contact.phone;
                 document.getElementById('edit-email').value = data.contact.email;
                 document.getElementById('edit-island_id').value = data.contact.island_id;
+                document.getElementById('edit-status').value = data.contact.status;
+
+                document.querySelector('.update-contact-form').action = `/contacts/${data.contact.id}`;
+
                 showModal('edit-contact-modal');
             });
     }

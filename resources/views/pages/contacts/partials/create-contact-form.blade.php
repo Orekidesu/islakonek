@@ -1,16 +1,8 @@
-<div>
+<div class="z-20">
     <x-bladewind::modal size="large" title="Large Modal" name="create-modal" backdrop_can_close="false"
         ok_button_action="createProfile()" ok_button_label="Create" close_after_action="false">
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
         <form action="{{ route('contacts.store') }} " method="POST" class="create-contact-form">
             @csrf
 
@@ -40,7 +32,18 @@
                     <input type="text" name="email" id="email" value="{{ old('email') }}"
                         class="mt-1 focus:ring-gray-800 focus:border-gray-600 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
-            </div>
+
+                {{-- Make for status --}}
+
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status" name="status"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-gray-800 focus:border-gray-600 sm:text-sm rounded-md">
+                        <option value="">Select a Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
 
 
         </form>

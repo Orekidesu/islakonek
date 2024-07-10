@@ -13,10 +13,9 @@ class IslandController extends Controller
      */
     public function index()
     {
-        $islands = Island::all();
-        $regions = Region::all();
 
-        return view('pages.islands.index', compact('regions'));
+
+        return view('pages.islands.index');
     }
 
     /**
@@ -31,6 +30,24 @@ class IslandController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'region_id' => 'required|exists:regions,id',
+            'population' => 'nullable',
+            'area_sq_km' => 'nullable',
+            'description' => 'nullable',
+            'image' => 'nullable',
+
+        ]);
+
+        Island::create([
+            'name' => $request->input('name'),
+            'region_id' => $request->input('region_id'),
+            'description' => $request->input('description', null),
+            'image' => $request->input('image', null),
+            'population' => $request->input('population', null),
+            'area_sq_km' => $request->input('area_sq_km', null),
+        ]);
     }
 
     /**

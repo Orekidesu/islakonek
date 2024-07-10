@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="container px-4 mx-auto w-full overflow-hidden">
+    <div class="container px-4 w-full overflow-hidden">
         {{-- Rendering all contacts --}}
         @livewire('contact.contact-table')
     </div>

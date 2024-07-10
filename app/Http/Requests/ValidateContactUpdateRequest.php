@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+// use log
+use Illuminate\Support\Facades\Log;
+
+
 
 class ValidateContactUpdateRequest extends FormRequest
 {
@@ -22,13 +26,15 @@ class ValidateContactUpdateRequest extends FormRequest
     public function rules(): array
     {
         $contactId = $this->route('contact')->id;
+
+        Log::debug('Contact ID:', ['contact_id' => $contactId]);
         return [
 
             'name' => 'required',
             // 'email' => 'required|email|unique:contacts,email,' . $this->contact->id,
             'email' => 'required|email|unique:contacts,email,' . $contactId,
             'phone' => 'required',
-            'status' => 'nullable',
+            'status' => 'required',
             'photo' => 'nullable',
             'island_id' => 'required|exists:islands,id',
         ];
