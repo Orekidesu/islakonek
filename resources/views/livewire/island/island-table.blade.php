@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
     {{-- Stop trying to control. --}}
 
     <div class="w-full">
@@ -10,18 +10,32 @@
         @include('pages.islands.partials.create-island-form')
     </div>
     <div class="bg-white dark:bg-gray-900">
-        <div class="container px-6 py-10 mx-auto grid md:grid-cols-3 grid-col-1 gap-2">
+        <div class="container px-6 py-10 mx-auto grid sm:grid-cols-2 md:grid-cols-3 grid-col-1 gap-2">
             @foreach ($islands as $island)
                 <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+
                     <div class="overflow-hidden">
-                        <img class="object-cover w-full h-64 transition-transform duration-500 transform hover:scale-110"
-                            src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                            alt="Article">
+                        <img src="{{ Storage::url('images/' . $island->image) }}" alt="island photo"
+                            class="object-cover w-full h-64 transition-transform duration-500 transform hover:scale-110">
                     </div>
                     <div class="p-6">
                         <div>
-                            <span
-                                class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">{{ $island->region->name }}</span>
+                            <div class="flex justify-between items-center ">
+                                <p class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
+                                    {{ $island->region->name }}</p>
+
+
+
+                                <div x-data="{ open: false }">
+                                    <button @click="open = !open" class="text-gray-500">
+                                        <span class="material-symbols-outlined">
+                                            more_vert
+                                        </span>
+                                    </button>
+                                    @include('pages.islands.partials.custom-button')
+
+                                </div>
+                            </div>
                             <a href="#"
                                 class="block mt-2 text-xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline"
                                 tabindex="0" role="link">{{ $island->name }}</a>

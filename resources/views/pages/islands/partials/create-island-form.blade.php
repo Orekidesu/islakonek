@@ -42,7 +42,7 @@
                 <div>
                     <label for="image">Upload image</label>
                     {{-- input type upload image --}}
-                    <x-bladewind::input type="file" name="image" />
+                    <x-bladewind::input type="file" name="image" required="true" />
                     <x-input-error for="image" :messages="$errors->get('image')" />
                 </div>
 

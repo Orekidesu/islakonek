@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Island;
-use Illuminate\Http\Request;
-use App\Models\Region;
+use App\Http\Requests\ValidateIslandCreateRequest; // Correct import for ValidateIslandCreateRequest
+use Illuminate\Support\Facades\Storage; // Import Storage facade
+
 
 class IslandController extends Controller
 {
@@ -28,26 +29,19 @@ class IslandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidateIslandCreateRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'region_id' => 'required|exists:regions,id',
-            'population' => 'nullable',
-            'area_sq_km' => 'nullable',
-            'description' => 'nullable',
-            'image' => 'nullable',
+        $data = $request->validated();
 
-        ]);
+        $island = Island::create($data);
+        $extension = $data['image']->getClientOriginalExtension();
+        $imageName = $island->id . '.' . $extension;
 
-        Island::create([
-            'name' => $request->input('name'),
-            'region_id' => $request->input('region_id'),
-            'description' => $request->input('description', null),
-            'image' => $request->input('image', null),
-            'population' => $request->input('population', null),
-            'area_sq_km' => $request->input('area_sq_km', null),
-        ]);
+        Storage::putFileAs('public/images', $data['image'], $imageName);
+        $island->image = $imageName;
+        $island->save();
+
+        return redirect()->route('islands.index');
     }
 
     /**
